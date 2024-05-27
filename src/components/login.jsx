@@ -1,9 +1,31 @@
 import { Field, Input, Label, Button } from "@headlessui/react";
 import clsx from "clsx";
+import { useForm } from "react-hook-form"
+import { useEffect } from 'react';
+import axios from "axios";
 
 const Login = () => {
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      userName: '',
+      password: ''
+    }
+  });
+
+  // useEffect(() => {
+  //   axios
+  //     .post('https://dummyjson.com/auth/login')
+  //     .then((response) => {
+  //       // setLogin(response.json);
+  //       console.log(response.json);
+  //     })
+   
+  // }, [])
+  
   return (
     <>
+    <form onSubmit={handleSubmit(console.log)}>
+
       <div className="w-[380px] m-auto bg-black p-28 rounded-lg ">
         <Field>
           <Label className="text-sm/6 font-medium text-white">
@@ -29,6 +51,7 @@ const Login = () => {
           </Button>
         </Field>
       </div>
+    </form>
     </>
   );
 };
