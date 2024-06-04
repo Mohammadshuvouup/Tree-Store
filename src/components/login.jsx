@@ -12,9 +12,13 @@ const Login = () => {
     },
   });
   const onSubmit = (data) => {
+    const userdata ={
+      username: "emilys",
+      password: "emilyspass"
+    };
     console.log(data);
     axios
-    .post("https://dummyjson.com/auth/login", { username:data.userName, password: data.password })
+    .post("https://dummyjson.com/auth/login", userdata)
     .then((response) => {
       console.log(response.data);
     })
@@ -22,24 +26,6 @@ const Login = () => {
       console.log(error.data);
     });
   }
-  
-  
-  
-  
-
-
-
-
-  // useEffect(() => {
-  //   axios
-  //     .post('https://dummyjson.com/auth/login')
-  //     .then((handleSubmit) => {
-  //       // setLogin(response.json);
-  //       console.log(handleSubmit.json);
-  //     })
-
-  // }, [])
-
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
