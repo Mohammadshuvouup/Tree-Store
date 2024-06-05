@@ -1,6 +1,7 @@
 import { Field, Input, Label, Button } from "@headlessui/react";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
+import { Toaster, toast } from "react-hot-toast";
 import { useEffect } from "react";
 import axios from "axios";
 
@@ -21,6 +22,13 @@ const Login = () => {
     .post("https://dummyjson.com/auth/login", userdata)
     .then((response) => {
       console.log(response.data);
+      if (response.status === 200) {
+        
+        localStorage.setItem("userName", userdata.username);
+        toast.success("Successfully login!");
+      } else {
+        toast.error("Mismatch Credentials!");
+      }
     })
     .catch((error) => {
       console.log(error.data);
@@ -28,6 +36,7 @@ const Login = () => {
   }
   return (
     <>
+    <Toaster position="top-center" reverseOrder={false} />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-[380px] m-auto bg-black p-28 rounded-lg ">
           <Field>
