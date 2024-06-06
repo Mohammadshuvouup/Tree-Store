@@ -6,16 +6,16 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const Login = () => {
-  const { register, handleSubmit, watch } = useForm({
-    defaultValues: {
-      userName: "",
-      password: "",
-    },
+  const { register, handleSubmit} = useForm({
+    // defaultValues: {
+    //   userName: "",
+    //   password: "",
+    // },
   });
   const onSubmit = (data) => {
     const userdata ={
-      username: "emilys",
-      password: "emilyspass"
+      username: "",
+      password: ""
     };
     console.log(data);
     axios
@@ -31,6 +31,7 @@ const Login = () => {
       }
     })
     .catch((error) => {
+      toast.error("Mismatch Credentials!");
       console.log(error.data);
     });
   }
