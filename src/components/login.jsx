@@ -2,7 +2,6 @@ import { Field, Input, Label, Button } from "@headlessui/react";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
-import { useEffect } from "react";
 import axios from "axios";
 
 const Login = () => {
@@ -38,12 +37,24 @@ const Login = () => {
   return (
     <>
     <Toaster position="top-center" reverseOrder={false} />
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="w-[380px] m-auto bg-black p-28 rounded-lg ">
           <Field>
             <Label className="text-sm/6 font-medium text-white">Sign in</Label>
             <Input
-              {...register("trn_no", { required: true })}
+              {...register("username", {
+                 required: {
+                  value :true,
+                  message:"Username is required"
+              } ,
+              validate: {
+                notAdmin: (username) =>{
+                   return(
+                    username !== "emilys" ||  "try different name" 
+                   )
+                }
+              }
+            })}
               placeholder="Enter your email"
               className={clsx(
                 "mt-3 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-white",
