@@ -3,19 +3,34 @@ import clsx from "clsx";
 import { useForm } from "react-hook-form";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+
+const schema = yup.object({
+  username: yup.string().required(),
+  // age: yup.number().positive().integer().required(),
+}).required();
 
 const Login = () => {
-  const { register, handleSubmit} = useForm({
-    // defaultValues: {
-    //   userName: 'emilys',
-    //   password: 'emilyspass'
-    // },
+
+  const { register, handleSubmit, formState:{ errors } } = useForm({
+    resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
     const userdata ={
       username: "",
       password: ""
     };
+
+    const errors = schema.validate(userdata);
+    console.log("error",data)
+
+    if (errors.length > 0) {
+      // There are errors in the form data
+      alert(errors.join("\n"));
+    } else {
+      // The form data is valid, do something with it
+    }
     console.log(data);
     axios
     .post("https://dummyjson.com/auth/login", userdata)
@@ -46,14 +61,8 @@ const Login = () => {
                  required: {
                   value :true,
                   message:"Username is required"
-              } ,
-              validate: {
-                notAdmin: (username) =>{
-                   return(
-                    username !== "emilys" ||  "try different name" 
-                   )
-                }
               }
+             
             })}
               placeholder="Enter your email"
               className={clsx(
@@ -61,6 +70,7 @@ const Login = () => {
                 "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
               )}
             />
+            <p>{errors.username?.message}</p>
             <Input
               placeholder="Password"
               required=""
