@@ -12,18 +12,20 @@ const schema = yup.object({
 }).required();
 
 const Login = () => {
+ 
 
   const { register, handleSubmit, formState:{ errors } } = useForm({
     resolver: yupResolver(schema)
   });
   const onSubmit = (data) => {
     const userdata ={
-      username: "",
-      password: ""
+      username: data.username,
+      password: data.password
     };
 
     const errors = schema.validate(userdata);
     console.log("error",data)
+    console.log("error2",errors)
 
     if (errors.length > 0) {
       // There are errors in the form data
@@ -31,7 +33,7 @@ const Login = () => {
     } else {
       // The form data is valid, do something with it
     }
-    console.log(data);
+    console.log("data",data);
     axios
     .post("https://dummyjson.com/auth/login", userdata)
     .then((response) => {
