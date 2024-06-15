@@ -28,10 +28,8 @@ const Login = () => {
     console.log("error2",errors)
 
     if (errors.length > 0) {
-      // There are errors in the form data
       alert(errors.join("\n"));
     } else {
-      // The form data is valid, do something with it
     }
     console.log("data",data);
     axios
