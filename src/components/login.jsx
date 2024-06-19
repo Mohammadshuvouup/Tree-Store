@@ -8,6 +8,7 @@ import * as yup from "yup";
 
 const schema = yup.object({
   username: yup.string().required(),
+  password: yup.string().required(),
   // age: yup.number().positive().integer().required(),
 }).required();
 
@@ -24,20 +25,15 @@ const Login = () => {
     };
 
     const errors = schema.validate(userdata);
-    console.log("error",data)
-    console.log("error2",errors)
 
     if (errors.length > 0) {
       alert(errors.join("\n"));
-    } else {
     }
-    console.log("data",data);
+  
     axios
     .post("https://dummyjson.com/auth/login", userdata)
     .then((response) => {
-      console.log(response.data);
       if (response.status === 200) {
-        
         localStorage.setItem("userName", userdata.username);
         toast.success("Successfully login!");
       } else {
@@ -72,6 +68,11 @@ const Login = () => {
             />
             <p>{errors.username?.message}</p>
             <Input
+             {...register("password", {
+              required: {
+               value :true,
+               message:"Password is required"
+            }})}
               placeholder="Password"
               required=""
               className={clsx(
